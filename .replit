@@ -1,0 +1,19 @@
+run = "node index.js && deploy-commands.js"
+entrypoint = "index.js"
+
+[interpreter]
+command = [ "prybar-nodejs","-i", "-ps1", "\u001b[33m\uEEA7\u001b[00m "]
+
+[packager]
+language = "nodejs"
+
+[packager.features]
+packageSearch = true
+guessImports = true
+
+[languages.javascript]
+pattern = "**/*.js"
+syntax = "javascript"
+
+[languages.javascript.languageServer]
+start = [ "typescript-language-server", "--stdio" ]

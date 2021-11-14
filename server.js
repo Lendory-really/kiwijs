@@ -37,27 +37,6 @@ for (const file of eventFiles) {
 
 require('child_process').execSync("node deploy-commands.js").toString('utf8')
 
-global.mongoose = require('mongoose')
-const dataURL = process.env.URL
-global.Guild = require("./data/guild.js");
-global.User = require('./data/user.js');
-mongoose.connect(dataURL, { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connection.on('connected',()=>{
-  console.log('Подключение базы данных')
-})
-client.on('messageCreate', async message => {
-  if (message.author.isBot) return;
-  global.user = await User.findOne({ guildID: message.guild.id, userID: message.author.id });
-  global.guild = await Guild.findOne({ guildID: message.guild.id });
-  if(!user) {
-    User.create({ guildID: message.guild.id, userID: message.author.id });
-    console.log(`[✅ DataBase] ${message.author.username} Успешно был(а) добавлен в базу-данных`)
-  }
-  if(!guild) { 
-    Guild.create({ guildID: message.guild.id }); 
-    console.log(`[✅ DataBase] ${message.guild.name} Успешно была добавлен в базу-данных`)
-  } 
-})
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
